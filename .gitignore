@@ -1,0 +1,10 @@
+# Entorno Virtual
+venv/
+*.env
+
+# Archivos de Python Compilados
+__pycache__/
+*.pyc
+
+# Archivos de PyCharm (IDE)
+.idea/
