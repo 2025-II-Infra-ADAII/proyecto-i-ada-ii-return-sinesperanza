@@ -1,10 +1,79 @@
-# Entorno Virtual
+# ================================
+# ENTORNO VIRTUAL
+# ================================
 venv/
-*.env
+.venv/
+env/
 
-# Archivos de Python Compilados
+# ================================
+# PYTHON - Archivos generados
+# ================================
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Archivos de PyCharm (IDE)
+# ================================
+# PyCharm - Archivos del IDE
+# ================================
 .idea/
+*.iws
+*.iml
+*.ipr
+
+# Directorio de workspace de PyCharm
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/sqlDataSources.xml
+
+# Configuración específica de PyCharm
+.idea/codeStyles/
+.idea/codeStyles/codeStyleConfig.xml
+.idea/misc.xml
+.idea/modules.xml
+
+# Archivos de historial
+.idea/localHistory/
+
+# ================================
+# SISTEMA - Archivos del sistema
+# ================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Archivos temporales
+*.tmp
+*.temp
+*.log
+*.pid
+
+# Archivos de bloqueo de base de datos
+*.fdb
+*.ldb
+*.mdb
