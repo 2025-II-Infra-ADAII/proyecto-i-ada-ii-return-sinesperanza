@@ -1,3 +1,4 @@
+from pathlib import Path
 def permute_yield(nums):
     """
     Generador que produce todas las permutaciones posibles de nums.
@@ -89,20 +90,38 @@ def escribir_salida(nombre_archivo, perm, costo):
         for i in perm:
             f.write(str(i) + "\n")
 
+def obtener_ruta_archivo(nombre_archivo, directorio="data"):
+    """
+    Obtiene la ruta completa de un archivo en el directorio especificado.
+    """
+    # Obtener el directorio actual del script
+    directorio_actual = Path(__file__).parent
+    # Subir un nivel y entrar al directorio de datos
+    ruta_archivo = directorio_actual.parent / directorio / nombre_archivo
+    return ruta_archivo
 
 
 if __name__ == "__main__":
-    # 🔹 Ejemplo de uso
-    entrada = "entrada.txt"
-    salida = "salida.txt"
+    # Ejemplo de uso
+    entrada = obtener_ruta_archivo("entrada.txt")
+    salida = obtener_ruta_archivo("salida.txt")
 
-    # 1️⃣ Leer finca
+    if not entrada.exists():
+        print(f"Error: No se encontró el archivo {entrada}")
+        print("Asegúrate de que el archivo entrada.txt esté en la carpeta 'data'")
+        exit(1)
+    # 1️ Leer finca
     finca = leer_finca(entrada)
 
-    # 2️⃣ Ejecutar fuerza bruta
+    permutaciones = permute_yield(finca)
+    for p in permutaciones:
+        print(p)
+
+
+    # 2 Ejecutar fuerza bruta
     mejor_perm, mejor_costo = roFB(finca)
 
-    # 3️⃣ Escribir resultado
+    # 3 Escribir resultado
     escribir_salida(salida, mejor_perm, mejor_costo)
 
     print("✅ Proceso completado.")
