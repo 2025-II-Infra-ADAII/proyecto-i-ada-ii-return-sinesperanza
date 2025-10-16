@@ -1,0 +1,52 @@
+name: CI Pipeline - Proyecto Riego Óptimo
+
+# Se ejecuta en cada push y pull request a cualquier rama
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Descargar el código del repositorio
+    - name: Checkout código
+      uses: actions/checkout@v4
+
+    # 2. Configurar Python 3.11
+    - name: Configurar Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    # 3. Instalar dependencias
+    - name: Instalar dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 4. Verificar sintaxis Python (compilación)
+    - name: Verificar sintaxis del código
+      run: |
+        python -m py_compile project1_ada2/__init__.py
+        python -m py_compile project1_ada2/irrigation_planks_fb.py
+        python -m py_compile tests/__init__.py
+        python -m py_compile tests/test_fuerza_bruta.py
+
+    # 5. Mostrar estructura del proyecto
+    - name: Mostrar estructura del proyecto
+      run: |
+        echo "✅ Estructura del proyecto:"
+        ls -R
+
+    # 6. Ejecutar prueba simple (sin pytest completo, solo importación)
+    - name: Verificar que los módulos se pueden importar
+      run: |
+        python -c "from project1_ada2.irrigation_planks_fb import roFB, calcular_costo; print('✅ Módulos importados correctamente')"
+
+    # Nota: Las pruebas unitarias completas NO se ejecutan aquí
+    # según los requerimientos del proyecto (para ahorrar recursos de GitHub Actions)
+    # Las pruebas deben ejecutarse localmente con: pytest tests/
