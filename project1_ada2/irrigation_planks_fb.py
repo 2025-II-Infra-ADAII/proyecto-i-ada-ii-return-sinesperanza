@@ -114,8 +114,9 @@ if __name__ == "__main__":
     finca = leer_finca(entrada)
 
     permutaciones = permute_yield(finca)
-    for p in permutaciones:
-        print(p)
+
+    #for p in permutaciones:
+    #    print(p)
 
 
     # 2 Ejecutar fuerza bruta
@@ -124,7 +125,7 @@ if __name__ == "__main__":
     # 3 Escribir resultado
     escribir_salida(salida, mejor_perm, mejor_costo)
 
-    print("✅ Proceso completado.")
+    print(" Proceso completado.")
     print("Mejor orden de riego:", mejor_perm)
     print("Costo mínimo total:", mejor_costo)
     print(f"Resultado guardado en '{salida}'")
