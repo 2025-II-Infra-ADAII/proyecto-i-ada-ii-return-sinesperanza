@@ -193,7 +193,8 @@ $$F_1 = \langle \langle 10, 3, 4 \rangle, \langle 5, 3, 3 \rangle, \langle 2, 2,
 
 #### Gráfico tiempo vs. $n$:
 
-![Gráfico de tiempos - Fuerza Bruta](imagenes/grafico_tiempos_fb.png)
+![Gráfico de tiempos - Fuerza Bruta](imagenes/grafico_tiempo_lineal_fb.png)
+![Gráfico de tiempos - Fuerza Bruta](imagenes/grafico_tiempo_log_fb.png)
 
 **Observación:** El crecimiento es **factorial**, confirmando la complejidad $O(n! \cdot n)$.
 
