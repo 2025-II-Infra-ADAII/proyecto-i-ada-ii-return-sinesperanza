@@ -11,10 +11,9 @@ import sys
 # Importar módulos propios
 from project1_ada2.io_utils import leer_finca, escribir_salida
 from project1_ada2.irrigation_planks_fb import roFB
-
+from project1_ada2.irrigation_planks_rov import roPV 
 
 # TODO: Descomentar cuando estén implementados
-# from project1_ada2.irrigation_planks_voraz import roV
 # from project1_ada2.irrigation_planks_pd import roPD
 
 
@@ -82,7 +81,7 @@ def mostrar_menu():
     print("=" * 60)
     print("\nAlgoritmos disponibles:")
     print("  [1] Fuerza Bruta (FB)")
-    print("  [2] Algoritmo Voraz (V) - ⚠️ Próximamente")
+    print("  [2] Algoritmo Voraz (V)")
     print("  [3] Programación Dinámica (PD) - ⚠️ Próximamente")
     print("  [0] Salir")
     print("-" * 60)
@@ -120,10 +119,8 @@ def ejecutar_algoritmo(opcion, finca):
         elif opcion == 2:
             print("📊 Algoritmo: Voraz")
             print("❌ Este algoritmo aún no está implementado")
-            return None
-            # TODO: Descomentar cuando esté listo
-            # perm, costo = roV(finca)
-            # return perm, costo
+            perm, costo = roPV(finca)
+            return perm, costo
 
         elif opcion == 3:
             print("📊 Algoritmo: Programación Dinámica")
@@ -203,9 +200,9 @@ def main():
         print("\n👋 Programa finalizado. ¡Hasta pronto!")
         sys.exit(0)
 
-    if opcion in [2, 3]:
+    if opcion in [3]:
         print("\n⚠️  Este algoritmo aún no está implementado.")
-        print("Por favor, seleccione Fuerza Bruta (opción 1) por ahora.")
+        print("Por favor, seleccione Fuerza Bruta o voraz (opción 1 o 2) por ahora.")
         sys.exit(0)
 
     # 4️⃣ Ejecutar algoritmo
