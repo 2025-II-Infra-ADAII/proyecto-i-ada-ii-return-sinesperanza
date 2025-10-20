@@ -14,6 +14,7 @@
 | Juan José Valencia Jimenez      | 2359567  | [Líder]        | [juan.j.valencia@correounivalle.edu.co]   |
 | Yulieth Tatiana Rengifo Rengifo | 2359748  | [Colaborador]  | [yulieth.rengifo@correounivalle.edu.co]   |
 | Pedro José Lopez Quiroz         | 2359423  | [Colaborador]  | [pedro.lopez@correounivalle.edu.co]       |
+| Anderson Gómez García         | 2266242  | [Colaborador]  | [gomez.anderson@correounivalle.edu.co]       |
 
 ---
 
