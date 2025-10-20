@@ -93,9 +93,11 @@ $$\Pi_{\text{voraz}} = \langle 1, 4, 0, 2, 3 \rangle$$
 $$CRF_{\Pi_{\text{voraz}}} = 0 + 2 + 0 + 10 + 5 = 17$$
 
 **Comparación con solución óptima (Fuerza Bruta):**
-- Costo voraz: 17
-- Costo óptimo: [COMPLETAR después de ejecutar fuerza bruta]
-- ¿Es óptima?: [SÍ/NO]
+- Solución voraz: $\Pi_{voraz} = \langle 1, 4, 0, 2, 3 \rangle$
+- Costo voraz: **17**
+- Solución óptima: $\Pi_{óptima} = \langle 2, 1, 3, 0, 4 \rangle$
+- Costo óptimo: **14**
+- **¿Es óptima?: NO ✗** (diferencia: +3)
 
 ---
 
@@ -133,8 +135,7 @@ $$CRF_{\Pi_{\text{voraz}}} = 0 + 0 + 8 + 10 + 5 = 23$$
 
 **Comparación con solución óptima (Fuerza Bruta):**
 - Costo voraz: 23
-- Costo óptimo: [COMPLETAR después de ejecutar fuerza bruta]
-- ¿Es óptima?: [SÍ/NO]
+
 
 ---
 
@@ -142,50 +143,208 @@ $$CRF_{\Pi_{\text{voraz}}} = 0 + 0 + 8 + 10 + 5 = 23$$
 
 Se diseñaron 4 casos de prueba adicionales para verificar el comportamiento del algoritmo voraz:
 
-#### Caso de Prueba 1: Tablones con prioridades crecientes
+---
+
+#### Caso de Prueba 3 (F₃): Tablones con prioridades crecientes
+
 **Entrada:**
 ```
 F₃ = ⟨⟨8, 2, 1⟩, ⟨7, 2, 2⟩, ⟨6, 2, 3⟩, ⟨5, 2, 4⟩⟩
 ```
 
-[COMPLETAR CON RESULTADOS]
+**Descripción:** Este caso prueba cómo se comporta el algoritmo cuando las prioridades aumentan uniformemente.
 
-#### Caso de Prueba 2: Tablones con tiempos de supervivencia iguales
+**Cálculo de claves voraz:**
+
+| Tablón | $ts$ | $tr$ | $p$ | $\text{clave} = \frac{ts}{p \cdot tr}$ | Valor |
+|--------|------|------|-----|----------------------------------------|-------|
+| 0      | 8    | 2    | 1   | $\frac{8}{1 \times 2} = 4.0$          | 4.000 |
+| 1      | 7    | 2    | 2   | $\frac{7}{2 \times 2} = 1.75$         | 1.750 |
+| 2      | 6    | 2    | 3   | $\frac{6}{3 \times 2} = 1.0$          | 1.000 |
+| 3      | 5    | 2    | 4   | $\frac{5}{4 \times 2} = 0.625$        | 0.625 |
+
+**Solución Voraz:**
+- Orden: $\Pi_{voraz} = \langle 3, 2, 1, 0 \rangle$ (ordenado por clave ascendente)
+- Costo: **0**
+
+**Tabla de cálculo:**
+
+| Tablón ($\pi_j$) | $ts$ | $tr$ | $p$ | $t^*$ | $t^* + tr$ | Retraso | Penalización |
+|------------------|------|------|-----|-------|------------|---------|--------------|
+| 3                | 5    | 2    | 4   | 0     | 2          | 0       | 0            |
+| 2                | 6    | 2    | 3   | 2     | 4          | 0       | 0            |
+| 1                | 7    | 2    | 2   | 4     | 6          | 0       | 0            |
+| 0                | 8    | 2    | 1   | 6     | 8          | 0       | 0            |
+
+**Solución Óptima (Fuerza Bruta):**
+- Orden: $\Pi_{óptima} = \langle 1, 3, 2, 0 \rangle$
+- Costo: **0**
+
+**Resultado:** ✅ **SÍ es óptima** (ambas soluciones tienen costo 0)
+
+**Análisis:** Como todos los tablones tienen el mismo tiempo de regado ($tr=2$) y los tiempos de supervivencia disminuyen, cualquier orden que los riegue antes de sus límites logra costo 0.
+
+---
+
+#### Caso de Prueba 4 (F₄): Tablones con tiempos de supervivencia iguales
+
 **Entrada:**
 ```
 F₄ = ⟨⟨5, 1, 1⟩, ⟨5, 2, 2⟩, ⟨5, 3, 3⟩, ⟨5, 4, 4⟩⟩
 ```
 
-[COMPLETAR CON RESULTADOS]
+**Descripción:** Todos los tablones tienen el mismo tiempo de supervivencia ($ts=5$), pero diferentes tiempos de regado y prioridades.
 
-#### Caso de Prueba 3: Tablones con tiempos de regado iguales
+**Cálculo de claves voraz:**
+
+| Tablón | $ts$ | $tr$ | $p$ | $\text{clave} = \frac{ts}{p \cdot tr}$ | Valor |
+|--------|------|------|-----|----------------------------------------|-------|
+| 0      | 5    | 1    | 1   | $\frac{5}{1 \times 1} = 5.0$          | 5.000 |
+| 1      | 5    | 2    | 2   | $\frac{5}{2 \times 2} = 1.25$         | 1.250 |
+| 2      | 5    | 3    | 3   | $\frac{5}{3 \times 3} = 0.556$        | 0.556 |
+| 3      | 5    | 4    | 4   | $\frac{5}{4 \times 4} = 0.3125$       | 0.313 |
+
+**Solución Voraz:**
+- Orden: $\Pi_{voraz} = \langle 3, 2, 1, 0 \rangle$ (ordenado por clave ascendente)
+- Costo: **19**
+
+**Tabla de cálculo:**
+
+| Tablón ($\pi_j$) | $ts$ | $tr$ | $p$ | $t^*$ | $t^* + tr$ | Retraso | Penalización |
+|------------------|------|------|-----|-------|------------|---------|--------------|
+| 3                | 5    | 4    | 4   | 0     | 4          | 0       | 0            |
+| 2                | 5    | 3    | 3   | 4     | 7          | 2       | 6            |
+| 1                | 5    | 2    | 2   | 7     | 9          | 4       | 8            |
+| 0                | 5    | 1    | 1   | 9     | 10         | 5       | 5            |
+
+**Costo total:** $0 + 6 + 8 + 5 = 19$
+
+**Solución Óptima (Fuerza Bruta):**
+- Orden: $\Pi_{óptima} = \langle 0, 3, 1, 2 \rangle$
+- Costo: **19**
+
+**Resultado:** ✅ **SÍ es óptima** (ambas soluciones tienen costo 19)
+
+**Análisis:** Aunque las permutaciones son diferentes, ambas logran el mismo costo óptimo. Esto demuestra que puede haber múltiples soluciones óptimas.
+
+---
+
+#### Caso de Prueba 5 (F₅): Tablones con tiempos de regado iguales
+
 **Entrada:**
 ```
 F₅ = ⟨⟨10, 3, 1⟩, ⟨8, 3, 2⟩, ⟨6, 3, 3⟩, ⟨4, 3, 4⟩⟩
 ```
 
-[COMPLETAR CON RESULTADOS]
+**Descripción:** Todos los tablones tienen el mismo tiempo de regado ($tr=3$), con tiempos de supervivencia decrecientes y prioridades crecientes.
 
-#### Caso de Prueba 4: Caso con posible no-optimalidad
+**Cálculo de claves voraz:**
+
+| Tablón | $ts$ | $tr$ | $p$ | $\text{clave} = \frac{ts}{p \cdot tr}$ | Valor |
+|--------|------|------|-----|----------------------------------------|-------|
+| 0      | 10   | 3    | 1   | $\frac{10}{1 \times 3} = 3.333$       | 3.333 |
+| 1      | 8    | 3    | 2   | $\frac{8}{2 \times 3} = 1.333$        | 1.333 |
+| 2      | 6    | 3    | 3   | $\frac{6}{3 \times 3} = 0.667$        | 0.667 |
+| 3      | 4    | 3    | 4   | $\frac{4}{4 \times 3} = 0.333$        | 0.333 |
+
+**Solución Voraz:**
+- Orden: $\Pi_{voraz} = \langle 3, 2, 1, 0 \rangle$ (ordenado por clave ascendente)
+- Costo: **4**
+
+**Tabla de cálculo:**
+
+| Tablón ($\pi_j$) | $ts$ | $tr$ | $p$ | $t^*$ | $t^* + tr$ | Retraso | Penalización |
+|------------------|------|------|-----|-------|------------|---------|--------------|
+| 3                | 4    | 3    | 4   | 0     | 3          | 0       | 0            |
+| 2                | 6    | 3    | 3   | 3     | 6          | 0       | 0            |
+| 1                | 8    | 3    | 2   | 6     | 9          | 1       | 2            |
+| 0                | 10   | 3    | 1   | 9     | 12         | 2       | 2            |
+
+**Costo total:** $0 + 0 + 2 + 2 = 4$
+
+**Solución Óptima (Fuerza Bruta):**
+- Orden: $\Pi_{óptima} = \langle 3, 2, 1, 0 \rangle$
+- Costo: **4**
+
+**Resultado:** ✅ **SÍ es óptima** (soluciones idénticas)
+
+**Análisis:** El algoritmo voraz encontró exactamente la solución óptima. Con tiempos de regado iguales, ordenar por urgencia ponderada funciona correctamente.
+
+---
+
+#### Caso de Prueba 6 (F₆): Caso extremo
+
 **Entrada:**
 ```
 F₆ = ⟨⟨20, 5, 1⟩, ⟨3, 1, 4⟩, ⟨15, 3, 2⟩⟩
 ```
 
-[COMPLETAR CON RESULTADOS]
+**Descripción:** Caso diseñado con contrastes fuertes: un tablón muy urgente ($ts=3$) con alta prioridad, versus tablones con mayor tiempo de supervivencia.
+
+**Cálculo de claves voraz:**
+
+| Tablón | $ts$ | $tr$ | $p$ | $\text{clave} = \frac{ts}{p \cdot tr}$ | Valor |
+|--------|------|------|-----|----------------------------------------|-------|
+| 0      | 20   | 5    | 1   | $\frac{20}{1 \times 5} = 4.0$         | 4.000 |
+| 1      | 3    | 1    | 4   | $\frac{3}{4 \times 1} = 0.75$         | 0.750 |
+| 2      | 15   | 3    | 2   | $\frac{15}{2 \times 3} = 2.5$         | 2.500 |
+
+**Solución Voraz:**
+- Orden: $\Pi_{voraz} = \langle 1, 2, 0 \rangle$ (ordenado por clave ascendente)
+- Costo: **0**
+
+**Tabla de cálculo:**
+
+| Tablón ($\pi_j$) | $ts$ | $tr$ | $p$ | $t^*$ | $t^* + tr$ | Retraso | Penalización |
+|------------------|------|------|-----|-------|------------|---------|--------------|
+| 1                | 3    | 1    | 4   | 0     | 1          | 0       | 0            |
+| 2                | 15   | 3    | 2   | 1     | 4          | 0       | 0            |
+| 0                | 20   | 5    | 1   | 4     | 9          | 0       | 0            |
+
+**Costo total:** $0 + 0 + 0 = 0$
+
+**Solución Óptima (Fuerza Bruta):**
+- Orden: $\Pi_{óptima} = \langle 1, 0, 2 \rangle$
+- Costo: **0**
+
+**Resultado:** ✅ **SÍ es óptima** (ambas soluciones tienen costo 0)
+
+**Análisis:** Múltiples ordenamientos logran costo 0. El tablón 1 debe ir primero (muy urgente), pero el orden de 0 y 2 es flexible ya que ambos tienen suficiente tiempo de supervivencia.
+
+---
 
 ### Tabla Resumen de Resultados
 
 | Caso | Tamaño (n) | Solución Voraz (Π) | Costo Voraz | Solución Óptima (Π) | Costo Óptimo | ¿Es Óptima? |
 |------|------------|-------------------|-------------|---------------------|--------------|-------------|
-| F₁   | 5          | ⟨1,4,0,2,3⟩       | 17          | [COMPLETAR]         | [COMPLETAR]  | [SÍ/NO]     |
-| F₂   | 5          | ⟨1,0,4,2,3⟩       | 23          | [COMPLETAR]         | [COMPLETAR]  | [SÍ/NO]     |
-| F₃   | 4          | [COMPLETAR]       | [COMPLETAR] | [COMPLETAR]         | [COMPLETAR]  | [SÍ/NO]     |
-| F₄   | 4          | [COMPLETAR]       | [COMPLETAR] | [COMPLETAR]         | [COMPLETAR]  | [SÍ/NO]     |
-| F₅   | 4          | [COMPLETAR]       | [COMPLETAR] | [COMPLETAR]         | [COMPLETAR]  | [SÍ/NO]     |
-| F₆   | 3          | [COMPLETAR]       | [COMPLETAR] | [COMPLETAR]         | [COMPLETAR]  | [SÍ/NO]     |
+| F₁   | 5          | ⟨1,4,0,2,3⟩       | 17          | ⟨2,1,3,0,4⟩         | 14           | NO ✗        |
+| F₂   | 5          | ⟨1,0,4,2,3⟩       | 23          | ⟨2,1,3,0,4⟩         | 14           | NO ✗        |
+| F₃   | 4          | ⟨3,2,1,0⟩         | 0           | ⟨1,3,2,0⟩           | 0            | SÍ ✓        |
+| F₄   | 4          | ⟨3,2,1,0⟩         | 19          | ⟨0,3,1,2⟩           | 19           | SÍ ✓        |
+| F₅   | 4          | ⟨3,2,1,0⟩         | 4           | ⟨3,2,1,0⟩           | 4            | SÍ ✓        |
+| F₆   | 3          | ⟨1,2,0⟩           | 0           | ⟨1,0,2⟩             | 0            | SÍ ✓        |
 
 ---
+
+### Análisis de Resultados
+
+**Observaciones clave:**
+
+1. **Casos óptimos (4/6):** F₃, F₄, F₅, F₆
+   - El algoritmo voraz funciona bien cuando hay patrones claros o cuando múltiples soluciones son óptimas
+
+2. **Casos NO óptimos (2/6):** F₁, F₂
+   - Ambos involucran tablones con bajo $ts$ pero baja prioridad
+   - El criterio voraz subestima la urgencia extrema de estos tablones
+
+3. **Patrón del fallo:**
+   - Ocurre cuando hay tablones con $ts$ muy bajo (urgente) pero $p$ bajo (baja prioridad)
+   - El denominador $p \cdot tr$ hace que estos tablones tengan clave alta, postergándolos
+   - La postergación causa que superen su $ts$, acumulando penalizaciones
+
+4. **Peor caso:** F₂ con diferencia de +9 (64% peor que el óptimo)
+
+**Conclusión:** El algoritmo voraz es efectivo en muchos casos prácticos, pero no garantiza optimalidad cuando existen trade-offs complejos entre urgencia y prioridad.
 
 ## 4.2.3 Análisis de Complejidad
 
@@ -250,37 +409,231 @@ La complejidad temporal del algoritmo voraz es **$O(n \log n)$**, dominada por l
 
 ### ¿El algoritmo voraz siempre encuentra la solución óptima?
 
-**Respuesta:** [A COMPLETAR después de analizar los resultados de las pruebas]
+**Respuesta:** NO SIEMPRE encuentra la solución óptima (depende del problema y del criterio voraz)
+¿Por qué?
+
+Toma decisiones locales (elige lo mejor en cada paso)
+No reconsidera decisiones pasadas
+Puede quedarse en una solución "buena" pero no óptima
 
 ### Argumentos Teóricos
 
-[INCLUIR ANÁLISIS BASADO EN:]
-- Propiedad de elección voraz
-- Subestructura óptima
-- Si se cumple o no el criterio de optimalidad
+Para que un algoritmo voraz garantice encontrar la solución óptima, debe cumplir dos propiedades fundamentales: **propiedad de elección voraz** y **subestructura óptima**.
+
+#### 1. Propiedad de Elección Voraz
+
+**Definición:** Una solución óptima global puede construirse tomando decisiones locales óptimas (voraces).
+
+**Análisis para nuestro criterio:**
+
+Nuestro algoritmo ordena por $\frac{ts_i}{p_i \cdot tr_i}$ asumiendo que regar primero los tablones con menor razón minimiza el costo global. Sin embargo, este criterio **toma decisiones miopes** que no consideran el impacto completo en el resto de la secuencia.
+
+**Problema:** El criterio no considera que:
+- Retrasar un tablón de baja prioridad puede ser aceptable si permite atender uno de alta prioridad a tiempo
+- Un tablón con $ts$ muy bajo (urgente) pero baja prioridad puede acumular penalizaciones significativas si se posterga demasiado
+- La interacción entre tiempos de regado consecutivos crea efectos no lineales en las penalizaciones
+
+Por lo tanto, **NO se cumple la propiedad de elección voraz** para este criterio, como lo demuestran los casos F₁ y F₂.
+
+#### 2. Subestructura Óptima
+
+**Definición:** Una solución óptima al problema contiene soluciones óptimas a sus subproblemas.
+
+**Análisis:**
+
+El problema de riego **SÍ tiene subestructura óptima**: si $\Pi^* = \langle \pi_0, \pi_1, ..., \pi_{n-1} \rangle$ es óptima, entonces $\Pi' = \langle \pi_1, ..., \pi_{n-1} \rangle$ debe ser óptima para el subproblema de regar los $n-1$ tablones restantes, iniciando en el tiempo $t_{\pi_0}^* + tr_{\pi_0}$.
+
+**¿Por qué?** Si existiera una mejor forma de ordenar los $n-1$ tablones restantes, podríamos combinarla con $\pi_0$ y obtener una solución mejor que $\Pi^*$, contradiciendo que $\Pi^*$ es óptima.
+
+Esta propiedad se cumple, lo que hace al problema adecuado para **programación dinámica**, pero no garantiza que **un criterio voraz específico** encuentre el óptimo.
+
+#### 3. Por qué el Criterio Voraz Falla
+
+**Limitación fundamental:** El criterio $\frac{ts_i}{p_i \cdot tr_i}$ asume que la urgencia relativa es independiente del orden global, pero en realidad:
+
+1. **Dependencia temporal:** El tiempo disponible para cada tablón depende de cuánto tiempo consumieron los tablones previos
+2. **Efectos acumulativos:** Decisiones tempranas afectan las penalizaciones de todos los tablones posteriores
+3. **No monotonicidad:** Un tablón "menos urgente" según el criterio puede volverse crítico si se retrasa lo suficiente
+
+**Ejemplo del fallo (Caso F₁):**
+- **Tablón 2:** $ts=2$, $tr=2$, $p=1$ → clave = $\frac{2}{1 \times 2} = 1.0$
+- **Tablón 1:** $ts=5$, $tr=3$, $p=3$ → clave = $\frac{5}{3 \times 3} = 0.556$
+
+El voraz elige el Tablón 1 primero (clave menor = 0.556). Pero el Tablón 2 es **extremadamente urgente** ($ts=2$ muy bajo). Aunque tiene baja prioridad, si se posterga demasiado acumula retraso significativo.
+
+**En la solución óptima:** Se riega el Tablón 2 primero ($\pi_0 = 2$), evitando que supere su $ts=2$, a pesar de tener menor "urgencia ponderada" según el criterio voraz.
+
+#### 4. Conclusión Teórica
+
+El algoritmo voraz propuesto **no garantiza optimalidad** porque:
+- ✗ No cumple la propiedad de elección voraz
+- ✓ Sí cumple subestructura óptima (útil para programación dinámica)
+- ✗ El criterio local no captura las interdependencias temporales del problema
+
+Sin embargo, es una **heurística eficiente** que:
+- Tiene complejidad $O(n \log n)$ (muy rápida)
+- Produce soluciones de buena calidad en el 66.7% de los casos analizados
+- La diferencia promedio con el óptimo es relativamente pequeña (6 unidades)
+- Es útil como aproximación inicial o cuando $n$ es muy grande para métodos exactos
 
 ### Evidencia Experimental
 
-Basándonos en los casos de prueba:
+Basándonos en los casos de prueba ejecutados, comparamos las soluciones del algoritmo voraz con las soluciones óptimas obtenidas mediante fuerza bruta:
 
-1. **Ejemplo 1 (F₁):** [COMPLETAR - comparar con fuerza bruta]
-2. **Ejemplo 2 (F₂):** [COMPLETAR - comparar con fuerza bruta]
-3. **Casos adicionales:** De los 4 casos diseñados, el algoritmo voraz encontró la solución óptima en [X] de ellos.
+#### Resumen de Resultados
+
+| Caso | n | Π (Voraz) | Costo Voraz | Π (Óptima) | Costo Óptimo | ¿Óptima? |
+|------|---|-----------|-------------|------------|--------------|----------|
+| F₁   | 5 | ⟨1,4,0,2,3⟩ | 17 | ⟨2,1,3,0,4⟩ | 14 | NO ✗ |
+| F₂   | 5 | ⟨1,0,4,2,3⟩ | 23 | ⟨2,1,3,0,4⟩ | 14 | NO ✗ |
+| F₃   | 4 | ⟨3,2,1,0⟩ | 0 | ⟨1,3,2,0⟩ | 0 | SÍ ✓ |
+| F₄   | 4 | ⟨3,2,1,0⟩ | 19 | ⟨0,3,1,2⟩ | 19 | SÍ ✓ |
+| F₅   | 4 | ⟨3,2,1,0⟩ | 4 | ⟨3,2,1,0⟩ | 4 | SÍ ✓ |
+| F₆   | 3 | ⟨1,2,0⟩ | 0 | ⟨1,0,2⟩ | 0 | SÍ ✓ |
+
+#### Análisis por Caso
+
+##### 1. Ejemplo 1 (F₁)
+
+**Entrada:** $F_1 = \langle \langle 10,3,4 \rangle, \langle 5,3,3 \rangle, \langle 2,2,1 \rangle, \langle 8,1,1 \rangle, \langle 6,4,2 \rangle \rangle$
+
+**Solución Voraz:**
+- Permutación: $\Pi_{voraz} = \langle 1, 4, 0, 2, 3 \rangle$
+- Costo: $CRF_{voraz} = 17$
+
+
+---
+
+##### 2. Ejemplo 2 (F₂)
+
+**Entrada:** $F_2 = \langle \langle 9,3,4 \rangle, \langle 5,3,3 \rangle, \langle 2,2,1 \rangle, \langle 8,1,1 \rangle, \langle 6,4,2 \rangle \rangle$
+
+**Solución Voraz:**
+- Permutación: $\Pi_{voraz} = \langle 1, 0, 4, 2, 3 \rangle$
+- Costo: $CRF_{voraz} = 23$
+
+
+---
+
+##### 3. Caso de Prueba 3 (F₃): Prioridades Crecientes
+
+**Entrada:** $F_3 = \langle \langle 8,2,1 \rangle, \langle 7,2,2 \rangle, \langle 6,2,3 \rangle, \langle 5,2,4 \rangle \rangle$
+
+**Solución Voraz:**
+- Permutación: $\Pi_{voraz} = \langle 3, 2, 1, 0 \rangle$
+- Costo: $CRF_{voraz} = 0$
+
+**Solución Óptima (Fuerza Bruta):**
+- Permutación: $\Pi_{óptima} = \langle 1, 3, 2, 0 \rangle$
+- Costo: $CRF_{óptima} = 0$
+
+**Resultado:** SÍ es óptima (ambas soluciones tienen costo 0)
+
+---
+
+##### 4. Caso de Prueba 4 (F₄): Tiempos de Supervivencia Iguales
+
+**Entrada:** $F_4 = \langle \langle 5,1,1 \rangle, \langle 5,2,2 \rangle, \langle 5,3,3 \rangle, \langle 5,4,4 \rangle \rangle$
+
+**Solución Voraz:**
+- Permutación: $\Pi_{voraz} = \langle 3, 2, 1, 0 \rangle$
+- Costo: $CRF_{voraz} = 19$
+
+**Solución Óptima (Fuerza Bruta):**
+- Permutación: $\Pi_{óptima} = \langle 0, 3, 1, 2 \rangle$
+- Costo: $CRF_{óptima} = 19$
+
+**Resultado:** SÍ es óptima (ambas soluciones tienen costo 19)
+
+---
+
+##### 5. Caso de Prueba 5 (F₅): Tiempos de Regado Iguales
+
+**Entrada:** $F_5 = \langle \langle 10,3,1 \rangle, \langle 8,3,2 \rangle, \langle 6,3,3 \rangle, \langle 4,3,4 \rangle \rangle$
+
+**Solución Voraz:**
+- Permutación: $\Pi_{voraz} = \langle 3, 2, 1, 0 \rangle$
+- Costo: $CRF_{voraz} = 4$
+
+**Solución Óptima (Fuerza Bruta):**
+- Permutación: $\Pi_{óptima} = \langle 3, 2, 1, 0 \rangle$
+- Costo: $CRF_{óptima} = 4$
+
+**Resultado:** SÍ es óptima (soluciones idénticas)
+
+---
+
+##### 6. Caso de Prueba 6 (F₆): Caso Extremo
+
+**Entrada:** $F_6 = \langle \langle 20,5,1 \rangle, \langle 3,1,4 \rangle, \langle 15,3,2 \rangle \rangle$
+
+**Solución Voraz:**
+- Permutación: $\Pi_{voraz} = \langle 1, 2, 0 \rangle$
+- Costo: $CRF_{voraz} = 0$
+
+**Solución Óptima (Fuerza Bruta):**
+- Permutación: $\Pi_{óptima} = \langle 1, 0, 2 \rangle$
+- Costo: $CRF_{óptima} = 0$
+
+**Resultado:** SÍ es óptima (ambas soluciones tienen costo 0)
+
+---
+
+#### Estadísticas Generales
+
+De los **6 casos de prueba** analizados:
+- ✅ Casos donde el voraz es óptimo: **4/6** (66.7%)
+- ❌ Casos donde el voraz NO es óptimo: **2/6** (33.3%)
+- 📊 Diferencia promedio cuando no es óptimo: **6.0** unidades de costo
+- 📊 Diferencia máxima: **9** unidades de costo (Caso F₂)
 
 ### Conclusión sobre Optimalidad
 
-[COMPLETAR CON UNA DE ESTAS OPCIONES:]
+**El algoritmo voraz propuesto NO garantiza encontrar la solución óptima en todos los casos.**
 
-**Opción A - Si es óptimo:**
-El algoritmo voraz propuesto encuentra la solución óptima en todos los casos analizados. Esto sugiere que el criterio $\frac{ts_i}{p_i \cdot tr_i}$ captura efectivamente la urgencia relativa de los tablones...
+Basándonos en la evidencia experimental:
+- El algoritmo encontró la solución óptima en 4 de 6 casos (66.7%)
+- Falló en 2 casos (F₁ y F₂), con diferencias de +3 y +9 respectivamente
 
-**Opción B - Si NO es óptimo:**
-El algoritmo voraz NO garantiza encontrar la solución óptima en todos los casos. 
+### Contraejemplo Concreto
 
-**Contraejemplo:**
-[Presentar aquí un caso concreto donde la solución voraz no coincide con la óptima, mostrando ambas soluciones y sus costos]
+**Caso F₁:** Demuestra que el criterio voraz no siempre es óptimo
 
-**Razón:** El criterio voraz toma decisiones locales sin considerar el impacto global en tablones posteriores...
+**Entrada:**
+$F_1 = \langle \langle 10,3,4 \rangle, \langle 5,3,3 \rangle, \langle 2,2,1 \rangle, \langle 8,1,1 \rangle, \langle 6,4,2 \rangle \rangle$
+
+**Solución Voraz:**
+- Orden: $\Pi_{voraz} = \langle 1, 4, 0, 2, 3 \rangle$
+- Costo: **17**
+
+**Solución Óptima:**
+- Orden: $\Pi_{óptima} = \langle 2, 1, 3, 0, 4 \rangle$
+- Costo: **14**
+
+**Diferencia:** El algoritmo voraz produce una solución **3 unidades más costosa** (21.4% peor) que el óptimo.
+
+### Análisis del Fallo
+
+El criterio voraz $\frac{ts_i}{p_i \cdot tr_i}$ toma decisiones locales que no consideran el impacto global en la secuencia completa:
+
+1. **Tablón 2** ($\langle 2,2,1 \rangle$): 
+   - Tiene muy bajo $ts=2$ (urgente)
+   - Pero tiene baja prioridad $p=1$ (bajo impacto)
+   - El voraz lo posterga mucho, acumulando penalización
+
+2. **En la solución óptima**: Se riega el tablón 2 **primero** ($\pi_0 = 2$), evitando que sufra retrasos a pesar de su baja prioridad, porque su urgencia extrema ($ts=2$) lo hace crítico.
+
+3. **Error del criterio**: Al ponderar por $p \cdot tr$ en el denominador, el algoritmo subestima la urgencia de tablones con baja prioridad pero tiempo de supervivencia muy corto.
+
+### Razón Teórica del Fallo
+
+El problema de riego óptimo **no cumple la propiedad de elección voraz** para este criterio porque:
+
+- Las penalizaciones son **acumulativas y dependientes del tiempo**: un tablón que se riega tarde afecta a todos los posteriores
+- El criterio **no captura las interdependencias temporales**: decidir regar un tablón antes afecta los tiempos de inicio de todos los siguientes
+- Existen **trade-offs complejos**: a veces es mejor atender primero un tablón "menos urgente" según la métrica local para optimizar el costo global
+
+Por lo tanto, el algoritmo voraz es una **heurística eficiente** pero no óptima.
 
 ---
 
@@ -360,5 +713,4 @@ def costo_total(finca, orden):
 
 ## Referencias de Código
 
-- Archivo: `src/voraz.py` (o la ruta correspondiente en tu proyecto)
 - Funciones: `roPV()`, `costo_total()`
